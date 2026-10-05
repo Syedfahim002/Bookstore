@@ -50,12 +50,13 @@ Then open:
 python manage.py shell -c "exec(open('seed.py', encoding='utf-8').read())"
 ```
 
-## 🔑 Admin login (created for demo)
+## 🔑 Admin panel
 
-- **Username:** admin
-- **Password:** admin12345
-
-*Change it before showing anywhere public!*
+- Open http://127.0.0.1:8000/admin
+- Create your own admin user (don't use the demo password):
+```bash
+python manage.py createsuperuser
+```
 
 ## 🧪 Running the check
 
