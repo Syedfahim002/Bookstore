@@ -1,0 +1,42 @@
+{% extends "bookstore/base.html" %}
+{% block title %}Home | Bookstore{% endblock %}
+{% block content %}
+<h1 class="page-title">📚 Browse Books</h1>
+
+<form class="search-form" method="get">
+    <input type="text" name="q" value="{{ query }}" placeholder="Search by title or author...">
+    <button type="submit">Search</button>
+</form>
+
+<div class="filter-bar">
+    <a class="chip {% if not current_category %}active{% endif %}" href="{% url 'book_list' %}">All</a>
+    {% for cat in categories %}
+        <a class="chip {% if current_category == cat.id %}active{% endif %}"
+           href="{% url 'book_list' %}?category={{ cat.id }}">{{ cat.name }}</a>
+    {% endfor %}
+</div>
+
+{% if books %}
+    <div class="grid">
+        {% for book in books %}
+            <div class="card">
+                <a href="{% url 'book_detail' book.pk %}">
+                    {% if book.cover %}<img src="{{ book.cover.url }}" alt="{{ book.title }}">
+                    {% else %}<div class="cover-placeholder">📕</div>{% endif %}
+                </a>
+                <div class="card-body">
+                    <h3>{{ book.title }}</h3>
+                    <div class="author">by {{ book.author }}</div>
+                    {% if book.category %}<div class="author">{{ book.category.name }}</div>{% endif %}
+                    <div class="meta">
+                        <span class="price">৳{{ book.price }}</span>
+                        <a class="btn" href="{% url 'book_detail' book.pk %}">View</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="empty">📭 No books found. Try a different search or <a href="{% url 'book_create' %}">add a book</a>.</div>
+{% endif %}
+{% endblock %}

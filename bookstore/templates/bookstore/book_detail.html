@@ -1,0 +1,22 @@
+{% extends "bookstore/base.html" %}
+{% block title %}{{ book.title }} | Bookstore{% endblock %}
+{% block content %}
+<div class="detail">
+    <a href="{% url 'book_list' %}" class="btn btn-secondary">&larr; Back</a>
+    <div style="margin-top:20px;">
+        {% if book.cover %}<img src="{{ book.cover.url }}" alt="{{ book.title }}">{% endif %}
+        <h1 class="page-title" style="font-size:1.6rem;">📖 {{ book.title }}</h1>
+        <p><strong>Author:</strong> {{ book.author }}</p>
+        {% if book.category %}<p><strong>Category:</strong> <span style="background:var(--primary-2);color:#fff;padding:2px 10px;border-radius:12px;font-size:.85rem;">{{ book.category.name }}</span></p>{% endif %}
+        <p style="font-size:1.6rem;color:var(--green);font-weight:800;">৳{{ book.price }}</p>
+        <p style="margin-top:10px;">{{ book.description }}</p>
+        <p style="color:#95a5a6;font-size:0.85rem;margin-top:10px;">Added on {{ book.created_at|date:"M d, Y" }}</p>
+    </div>
+    {% if user.is_authenticated and user.is_staff %}
+    <div class="actions">
+        <a class="btn btn-edit" href="{% url 'book_update' book.pk %}">✏️ Edit</a>
+        <a class="btn btn-danger" href="{% url 'book_delete' book.pk %}">🗑️ Delete</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

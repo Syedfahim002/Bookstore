@@ -1,0 +1,21 @@
+{% extends "bookstore/base.html" %}
+{% block title %}{{ title }} | Bookstore{% endblock %}
+{% block content %}
+<div class="detail">
+    <h2>{{ title }}</h2>
+    <form method="post" enctype="multipart/form-data" style="margin-top:20px;">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="field">
+                <label>{{ field.label }}</label>
+                {{ field.errors }}
+                {{ field }}
+            </div>
+        {% endfor %}
+        <div class="actions">
+            <button type="submit">Save</button>
+            <a class="btn btn-secondary" href="{% url 'book_list' %}">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
