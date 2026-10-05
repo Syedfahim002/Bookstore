@@ -15,17 +15,16 @@ This is a self-built demo project for showing skills to recruiters/companies.
 ## 📁 Project structure
 
 ```
-04-projects/
-├── config/          # project settings & URLs
-├── bookstore/       # main app
-│   ├── models.py    # Category, Book
-│   ├── views.py     # CRUD + filter + search
-│   ├── forms.py
-│   ├── serializers.py # REST API
-│   ├── api.py       # DRF viewset
-│   └── templates/bookstore/  # HTML templates
-├── seed.py          # adds demo books/categories
-└── manage.py
+config/              # project settings & URLs
+bookstore/           # main app
+├── models.py        # Category, Book
+├── views.py         # CRUD + filter + search
+├── forms.py
+├── serializers.py   # REST API
+├── api.py           # DRF viewset
+└── templates/bookstore/  # HTML templates
+seed.py              # adds demo books/categories
+manage.py
 ```
 
 ## 🚀 How to run
