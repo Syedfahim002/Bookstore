@@ -1,0 +1,29 @@
+databases:
+  - name: bookstore
+    databaseName: bookstore
+    user: bookstore
+    plan: free
+
+services:
+  - type: web
+    name: bookstore
+    runtime: python
+    free: true
+    buildCommand: >
+      pip install -r requirements.txt
+      && python manage.py collectstatic --noinput
+      && python manage.py migrate
+      && python manage.py shell -c "exec(open('seed.py', encoding='utf-8').read())"
+    startCommand: gunicorn config.wsgi:application
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.6
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: bookstore.onrender.com
+      - key: DATABASE_URL
+        fromDatabase:
+          name: bookstore
