@@ -1,6 +1,9 @@
 """Seed some demo books/categories so the site has content to show.
 Run with:  python manage.py shell < seed.py
 """
+import os
+
+from django.contrib.auth.models import User
 from bookstore.models import Category, Book
 
 cats = ["Fiction", "Science", "Programming", "History", "Biography"]
@@ -30,3 +33,19 @@ for title, author, cat, price in demo_books:
     )
 
 print(f"Seeded {len(Category.objects.all())} categories and {len(Book.objects.all())} books.")
+
+# Create a default admin superuser so the Django /admin/ panel is accessible.
+# (The Free Render plan has no shell/SSH access, so we create it on every deploy.)
+admin_username = os.environ.get("DJANGO_SUPERUSER_USERNAME", "admin")
+admin_email = os.environ.get("DJANGO_SUPERUSER_EMAIL", "admin@example.com")
+admin_password = os.environ.get("DJANGO_SUPERUSER_PASSWORD", "syedfahim002")
+
+if not User.objects.filter(username=admin_username).exists():
+    User.objects.create_superuser(
+        username=admin_username,
+        email=admin_email,
+        password=admin_password,
+    )
+    print(f"Created admin superuser '{admin_username}'.")
+else:
+    print(f"Admin superuser '{admin_username}' already exists.")
